@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ที่อยู่สำหรับจัดส่งไปรษณีย์ — CPA Thailand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--main:#1976D2;--dark:#0D47A1;--light:#E3F2FD;--white:#fff;--bg:#F5F5F5;--line:#DEDEDE;--gray:#666;--text:#333;--err:#CC3333}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;font-size:15px}
+.topbar{background:var(--dark);padding:6px 32px;display:flex;justify-content:flex-end;gap:20px}
+.topbar a{color:rgba(255,255,255,.75);font-size:12px;text-decoration:none}
+.topbar a:hover{color:#fff}
+header{background:var(--white);border-bottom:3px solid var(--main);padding:10px 32px;display:flex;align-items:center;justify-content:space-between}
+.header-right img{height:30px;object-fit:contain}
+.radios{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.radios label{display:flex;align-items:center;gap:8px;border:1px solid #CCC;border-radius:3px;padding:10px 12px;margin:0;cursor:pointer;font-weight:500}
+.radios label:has(input:checked){border-color:var(--main);background:var(--light);color:var(--dark);font-weight:600}
+.radios input{width:auto;accent-color:var(--main)}
+.header-left{display:flex;align-items:center;gap:14px}
+.header-left img{height:52px;object-fit:contain}
+.brand{border-left:2px solid var(--line);padding-left:14px}
+.brand .name{color:var(--dark);font-size:15px;font-weight:700;line-height:1.2}
+.brand .sub{color:var(--gray);font-size:11px;font-weight:300}
+.page-band{background:var(--main);padding:28px 32px 0;text-align:center}
+.page-band h1{color:#fff;font-size:clamp(20px,4vw,28px);font-weight:700;margin-bottom:6px}
+.page-band .subtitle{color:rgba(255,255,255,.85);font-size:13.5px;font-weight:300;margin-bottom:24px}
+.main{flex:1;display:flex;justify-content:center;padding:32px 16px 48px}
+.stack{width:100%;max-width:560px}
+.card{background:#fff;border:1px solid var(--line);border-top:3px solid var(--main);border-radius:4px;padding:28px 28px 32px;box-shadow:0 2px 12px rgba(0,0,0,.06);display:none}
+.card.show{display:block}
+.card-title{font-size:14px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+.card-title::before{content:'';width:4px;height:16px;background:var(--main);border-radius:2px}
+.steps{display:flex;gap:6px;margin-bottom:18px}
+.steps span{flex:1;height:5px;border-radius:3px;background:var(--line)}
+.steps span.on{background:var(--main)}
+.field{margin-bottom:18px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+.field-row .field{margin-bottom:0}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+label .req{color:var(--dark);margin-left:2px}
+label .hint{display:block;font-weight:400;color:var(--gray);font-size:11.5px;margin-top:2px}
+input,textarea{width:100%;padding:10px 12px;border:1px solid #CCC;border-radius:3px;font-family:'Sarabun',sans-serif;font-size:14px;color:var(--text);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s}
+textarea{resize:vertical;min-height:110px;line-height:1.6}
+input:focus,textarea:focus{border-color:var(--main);box-shadow:0 0 0 2px rgba(25,118,210,.15)}
+input.error,textarea.error{border-color:var(--err);box-shadow:0 0 0 2px rgba(204,51,51,.10)}
+input[readonly]{background:var(--light);font-weight:600;color:var(--dark)}
+.btns{display:flex;gap:10px;margin-top:6px}
+button{flex:1;border:none;border-radius:3px;padding:13px;font-family:'Sarabun',sans-serif;font-size:15px;font-weight:600;cursor:pointer;position:relative;letter-spacing:.3px}
+.pri{background:var(--main);color:#fff}.pri:hover{background:var(--dark)}
+.sec{background:var(--light);color:var(--dark)}.sec:hover{background:#BBDEFB}
+button:disabled{background:#CCC;color:#fff;cursor:not-allowed}
+.ve{border:1px solid #EEBEBE;border-left:4px solid var(--err);border-radius:3px;background:#FDF5F5;padding:14px 16px;margin-bottom:16px;display:none}
+.ve.show{display:block}
+.ve .t{color:var(--err);font-weight:700;font-size:13.5px;margin-bottom:6px}
+.ve ul{padding-left:18px}.ve li{color:#7A2020;font-size:13.5px;line-height:1.8}
+.done{text-align:center}
+.done .ic{width:64px;height:64px;border-radius:50%;background:var(--light);color:var(--main);font-size:34px;line-height:64px;margin:0 auto 12px}
+.done h2{color:var(--dark);font-size:20px;margin-bottom:14px}
+.label-box{background:var(--light);border:1px dashed var(--main);border-radius:4px;padding:14px 16px;text-align:left;white-space:pre-line;line-height:1.8;margin-bottom:20px}
+.notice{border-radius:6px;overflow:hidden;margin-top:22px}
+.notice-h{background:var(--dark);padding:7px 16px;color:rgba(255,255,255,.9);font-size:12px;font-weight:600}
+.notice-b{padding:12px 16px;border:1px solid var(--line);border-top:none;border-radius:0 0 6px 6px}
+.notice-b ol{padding-left:20px;color:var(--dark)}.notice-b li{font-size:13px;line-height:1.8;margin-bottom:4px}
+footer{background:#2B2B2B;padding:18px 32px;text-align:center;font-size:11px;color:rgba(255,255,255,.4);line-height:1.7}
+@media(max-width:520px){header,.topbar{padding-left:16px;padding-right:16px}.page-band{padding:24px 16px 0}.card{padding:20px 16px 24px}.field-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="tel:022607061">📞 02-260-7061 ต่อ 101</a>
+  <a href="https://cpathailand.co.th" target="_blank">🌐 cpathailand.co.th</a>
+</div>
+<header>
+  <div class="header-left">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlL0U2PIgQ6UVn9C2mhB8HXaf63qBx_OYxdQ&s" alt="CPA Thailand" />
+    <div class="brand"><div class="name">CPA (Thailand)</div><div class="sub">Center for Professional Assessment</div></div>
+  </div>
+  <div class="header-right"><img src="https://perpignan.alfmed.com/wp-content/uploads/2025/03/TOEIC-logo-green.png" alt="TOEIC" /></div>
+</header>
+<div class="page-band">
+  <h1>แบบฟอร์มที่อยู่สำหรับจัดส่งไปรษณีย์</h1>
+  <p class="subtitle">กรอกข้อมูลผู้สอบและที่อยู่สำหรับจัดส่งเอกสาร</p>
+</div>
+
+<div class="main"><div class="stack">
+
+  <!-- หน้า 1 -->
+  <div class="card show" id="p1">
+    <div class="steps"><span class="on"></span><span></span><span></span></div>
+    <div class="card-title">ข้อมูลผู้สอบ</div>
+    <div class="ve" id="ve1"></div>
+    <div class="field"><label for="fullname">ชื่อ-นามสกุล (ภาษาอังกฤษเท่านั้น) <span class="req">*</span></label><input type="text" id="fullname" autocomplete="off" placeholder="เช่น SOMCHAI JAIDEE" /></div>
+    <div class="field">
+      <label>สัญชาติของผู้สอบ <span class="req">*</span></label>
+      <div class="radios">
+        <label><input type="radio" name="idType" value="THAI" checked /> คนไทย</label>
+        <label><input type="radio" name="idType" value="FOREIGN" /> ชาวต่างชาติ</label>
+      </div>
+    </div>
+    <div class="field">
+      <label for="idnum" id="idLabel">เลขบัตรประชาชน 13 หลัก <span class="req">*</span><span class="hint" id="idHint">ของผู้สอบเท่านั้น</span></label>
+      <input type="text" id="idnum" inputmode="numeric" maxlength="13" autocomplete="off" />
+    </div>
+    <div class="btns"><button class="pri" id="next1">ถัดไป</button></div>
+  </div>
+
+  <!-- หน้า 2 -->
+  <div class="card" id="p2">
+    <div class="steps"><span class="on"></span><span class="on"></span><span></span></div>
+    <div class="card-title">ที่อยู่สำหรับจัดส่ง</div>
+    <div class="ve" id="ve2"></div>
+    <div class="field"><label>ชื่อ-นามสกุล (บรรทัดที่ 1)</label><input type="text" id="nm" readonly /></div>
+    <div class="field">
+      <label for="addr">ที่อยู่ (บรรทัดที่ 2 เป็นต้นไป) <span class="req">*</span>
+        <span class="hint">บ้านเลขที่ หมู่ ซอย ถนน ตำบล/แขวง อำเภอ/เขต จังหวัด — ขึ้นบรรทัดใหม่ได้ ไม่ต้องใส่รหัสไปรษณีย์ในช่องนี้</span></label>
+      <textarea id="addr" placeholder="บ้านเลขที่ หมู่ ซอย ถนน&#10;แขวง/ตำบล เขต/อำเภอ จังหวัด"></textarea>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="zip">รหัสไปรษณีย์ <span class="req">*</span></label><input type="text" id="zip" inputmode="numeric" maxlength="5" /></div>
+      <div class="field"><label for="tel">เบอร์โทรศัพท์ 10 หลัก <span class="req">*</span></label><input type="tel" id="tel" inputmode="numeric" maxlength="10" /></div>
+    </div>
+    <div class="btns"><button class="sec" id="back2">ย้อนกลับ</button><button class="pri" id="send">ส่งข้อมูล</button></div>
+  </div>
+
+  <!-- หน้า 3 -->
+  <div class="card" id="p3">
+    <div class="steps"><span class="on"></span><span class="on"></span><span class="on"></span></div>
+    <div class="done">
+      <div class="ic">✓</div>
+      <h2>บันทึกข้อมูลเรียบร้อย</h2>
+      <div class="label-box" id="sum"></div>
+    </div>
+    <div class="btns"><button class="sec" id="back3">กลับหน้าแรก</button></div>
+  </div>
+
+  <div class="notice">
+    <div class="notice-h">ข้อควรทราบ</div>
+    <div class="notice-b"><ol>
+      <li>กรอกข้อมูลของผู้สอบเท่านั้น และส่งได้ 1 ครั้งต่อ 1 เลขบัตรประชาชน/เลขหนังสือเดินทาง</li>
+      <li>โปรดตรวจสอบที่อยู่และรหัสไปรษณีย์ให้ถูกต้อง เพื่อป้องกันการจัดส่งล่าช้าหรือตีกลับ</li>
+      <li>สอบถามเพิ่มเติม โทร 02-260-7061 ต่อ 101</li>
+    </ol></div>
+  </div>
+
+</div></div>
+
+<footer>
+  &copy; 2026 Center for Professional Assessment (Thailand). All rights reserved.<br />
+  ETS, TOEIC are registered trademarks of ETS, used under license in Thailand.
+</footer>
+
+<script>
+// ▼ วาง URL ของ Web App (GAS) ที่นี่
+const API = 'PASTE_YOUR_GAS_WEB_APP_URL_HERE';
+
+const $ = id => document.getElementById(id);
+function go(n){
+  [1,2,3].forEach(i => $('p'+i).classList.toggle('show', i===n));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+async function call(payload){
+  const r = await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+  if(!r.ok) throw new Error('เชื่อมต่อไม่สำเร็จ');
+  return r.json();
+}
+function validId(s){
+  if(!/^\d{13}$/.test(s)) return false;
+  let sum=0; for(let i=0;i<12;i++) sum+=+s[i]*(13-i);
+  return (11-sum%11)%10 === +s[12];
+}
+function showErr(box, list, fields){
+  document.querySelectorAll('.error').forEach(e=>e.classList.remove('error'));
+  fields.forEach(f=>$(f).classList.add('error'));
+  const el=$(box);
+  el.innerHTML = '<div class="t">กรุณาแก้ไขข้อมูลต่อไปนี้ ('+list.length+' รายการ)</div><ul>'+list.map(x=>'<li>'+x+'</li>').join('')+'</ul>';
+  el.classList.add('show');
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function clearErr(box){ $(box).classList.remove('show'); document.querySelectorAll('.error').forEach(e=>e.classList.remove('error')); }
+
+const isThai = () => document.querySelector('input[name=idType]:checked').value === 'THAI';
+function applyType(){
+  const t=isThai(), el=$('idnum'); el.value='';
+  el.maxLength = t?13:9; el.inputMode = t?'numeric':'text';
+  $('idLabel').firstChild.textContent = t?'เลขบัตรประชาชน 13 หลัก ':'เลขหนังสือเดินทาง (Passport No.) ';
+  $('idHint').textContent = t?'ของผู้สอบเท่านั้น':'ตัวอักษรภาษาอังกฤษและตัวเลข 6–9 ตัว ไม่ต้องเว้นวรรค';
+}
+document.querySelectorAll('input[name=idType]').forEach(r=>r.addEventListener('change',applyType));
+$('fullname').addEventListener('input',e=>{ e.target.value=e.target.value.replace(/[^A-Za-z .'-]/g,'').toUpperCase(); });
+$('idnum').addEventListener('input',e=>{
+  e.target.value = isThai() ? e.target.value.replace(/\D/g,'') : e.target.value.replace(/[^A-Za-z0-9]/g,'').toUpperCase();
+});
+['zip','tel'].forEach(id=>$(id).addEventListener('input',e=>{ e.target.value=e.target.value.replace(/\D/g,''); }));
+
+$('next1').onclick = async () => {
+  clearErr('ve1');
+  const name=$('fullname').value.trim().replace(/\s+/g,' '), idv=$('idnum').value, t=isThai();
+  const errs=[], bad=[];
+  if(!/^[A-Za-z]+([ .'-][A-Za-z]+)+$/.test(name)){errs.push('กรุณากรอกชื่อและนามสกุลภาษาอังกฤษ (คั่นด้วยช่องว่าง)');bad.push('fullname');}
+  if(t && !validId(idv)){errs.push('เลขบัตรประชาชนไม่ถูกต้อง (ต้องมี 13 หลัก)');bad.push('idnum');}
+  if(!t && !/^[A-Z0-9]{6,9}$/.test(idv)){errs.push('เลขหนังสือเดินทางต้องเป็นตัวอักษร/ตัวเลข 6–9 ตัว');bad.push('idnum');}
+  if(errs.length) return showErr('ve1',errs,bad);
+  if(API.indexOf('PASTE_YOUR')!==-1) return showErr('ve1',['ยังไม่ได้ตั้งค่า API ในไฟล์ index.html'],[]);
+  $('next1').disabled=true; $('next1').textContent='กำลังตรวจสอบ...';
+  try{
+    const r = await call({action:'check',idNumber:idv});
+    if(r.exists) return showErr('ve1',[(t?'เลขบัตรประชาชน':'เลขหนังสือเดินทาง')+'นี้ได้ส่งข้อมูลแล้ว ไม่สามารถส่งซ้ำได้'],['idnum']);
+    $('nm').value = name; go(2);
+  }catch(e){ showErr('ve1',['เชื่อมต่อระบบไม่ได้ กรุณาลองใหม่'],[]); }
+  finally{ $('next1').disabled=false; $('next1').textContent='ถัดไป'; }
+};
+$('back2').onclick = () => go(1);
+
+$('send').onclick = async () => {
+  clearErr('ve2');
+  const addr=$('addr').value.trim(), zip=$('zip').value, tel=$('tel').value;
+  const errs=[], bad=[];
+  if(!addr){errs.push('กรุณากรอกที่อยู่');bad.push('addr');}
+  if(!/^\d{5}$/.test(zip)){errs.push('รหัสไปรษณีย์ต้องเป็นตัวเลข 5 หลัก');bad.push('zip');}
+  if(!/^0\d{9}$/.test(tel)){errs.push('เบอร์โทรศัพท์ต้องมี 10 หลัก และขึ้นต้นด้วย 0');bad.push('tel');}
+  if(errs.length) return showErr('ve2',errs,bad);
+  $('send').disabled=true; $('send').textContent='กำลังบันทึก...';
+  try{
+    const r = await call({action:'submit',idType:document.querySelector('input[name=idType]:checked').value,idNumber:$('idnum').value,fullName:$('nm').value,address:addr,zip,tel});
+    if(r.ok){ $('sum').textContent=$('nm').value+'\n'+addr+' '+zip+'\nโทร '+tel; go(3); }
+    else showErr('ve2',[r.msg||'บันทึกไม่สำเร็จ'],[]);
+  }catch(e){ showErr('ve2',['เชื่อมต่อระบบไม่ได้ กรุณาลองใหม่'],[]); }
+  finally{ $('send').disabled=false; $('send').textContent='ส่งข้อมูล'; }
+};
+$('back3').onclick = () => { ['fullname','addr','zip','tel'].forEach(i=>$(i).value=''); document.querySelector('input[name=idType][value=THAI]').checked=true; applyType(); go(1); };
+applyType();
+</script>
+</body>
+</html>
