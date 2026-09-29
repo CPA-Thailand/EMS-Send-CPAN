@@ -82,7 +82,7 @@ footer{background:#2B2B2B;padding:18px 32px;text-align:center;font-size:11px;col
 </header>
 <div class="page-band">
   <h1>แบบฟอร์มที่อยู่สำหรับจัดส่งไปรษณีย์</h1>
-  <p class="subtitle">กรอกข้อมูลผู้สอบและที่อยู่สำหรับจัดส่งเอกสาร</p>
+  <p class="subtitle">กรอกข้อมูลของผู้สอบและที่อยู่สำหรับจัดส่งผลคะแนน</p>
 </div>
 
 <div class="main"><div class="stack">
@@ -92,16 +92,9 @@ footer{background:#2B2B2B;padding:18px 32px;text-align:center;font-size:11px;col
     <div class="steps"><span class="on"></span><span></span><span></span></div>
     <div class="card-title">ข้อมูลผู้สอบ</div>
     <div class="ve" id="ve1"></div>
-    <div class="field"><label for="fullname">ชื่อ-นามสกุล (ภาษาอังกฤษเท่านั้น) <span class="req">*</span></label><input type="text" id="fullname" autocomplete="off" placeholder="เช่น SOMCHAI JAIDEE" /></div>
+    <div class="field"><label for="fullname">ชื่อ-นามสกุล (ชื่อผู้สอบภาษาอังกฤษเท่านั้น) <span class="req">*</span></label><input type="text" id="fullname" autocomplete="off" placeholder=" " /></div>
     <div class="field">
-      <label>สัญชาติของผู้สอบ <span class="req">*</span></label>
-      <div class="radios">
-        <label><input type="radio" name="idType" value="THAI" checked /> คนไทย</label>
-        <label><input type="radio" name="idType" value="FOREIGN" /> ชาวต่างชาติ</label>
-      </div>
-    </div>
-    <div class="field">
-      <label for="idnum" id="idLabel">เลขบัตรประชาชน 13 หลัก <span class="req">*</span><span class="hint" id="idHint">ของผู้สอบเท่านั้น</span></label>
+      <label for="idnum" id="idLabel">เลขบัตรประชาชน 13 หลัก <span class="req">*</span><span class="hint" id="idHint">เฉพาะตัวเลข</span></label>
       <input type="text" id="idnum" inputmode="numeric" maxlength="13" autocomplete="off" />
     </div>
     <div class="btns"><button class="pri" id="next1">ถัดไป</button></div>
@@ -112,9 +105,9 @@ footer{background:#2B2B2B;padding:18px 32px;text-align:center;font-size:11px;col
     <div class="steps"><span class="on"></span><span class="on"></span><span></span></div>
     <div class="card-title">ที่อยู่สำหรับจัดส่ง</div>
     <div class="ve" id="ve2"></div>
-    <div class="field"><label>ชื่อ-นามสกุล (บรรทัดที่ 1)</label><input type="text" id="nm" readonly /></div>
+    <div class="field"><label>ชื่อ-นามสกุล</label><input type="text" id="nm" readonly /></div>
     <div class="field">
-      <label for="addr">ที่อยู่ (บรรทัดที่ 2 เป็นต้นไป) <span class="req">*</span>
+      <label for="addr">ที่อยู่สำหรับจัดส่งผลคะแนน <span class="req">*</span>
         <span class="hint">บ้านเลขที่ หมู่ ซอย ถนน ตำบล/แขวง อำเภอ/เขต จังหวัด — ขึ้นบรรทัดใหม่ได้ ไม่ต้องใส่รหัสไปรษณีย์ในช่องนี้</span></label>
       <textarea id="addr" placeholder="บ้านเลขที่ หมู่ ซอย ถนน&#10;แขวง/ตำบล เขต/อำเภอ จังหวัด"></textarea>
     </div>
@@ -137,11 +130,10 @@ footer{background:#2B2B2B;padding:18px 32px;text-align:center;font-size:11px;col
   </div>
 
   <div class="notice">
-    <div class="notice-h">ข้อควรทราบ</div>
+    <div class="notice-h">หมายเหตุ</div>
     <div class="notice-b"><ol>
-      <li>กรอกข้อมูลของผู้สอบเท่านั้น และส่งได้ 1 ครั้งต่อ 1 เลขบัตรประชาชน/เลขหนังสือเดินทาง</li>
+      <li>กรอกข้อมูลเฉพาะของผู้สอบเท่านั้น หากต้องการกรอกชื่อผู้รับเพิ่มเติมให้ระบุในที่อยู่</li>
       <li>โปรดตรวจสอบที่อยู่และรหัสไปรษณีย์ให้ถูกต้อง เพื่อป้องกันการจัดส่งล่าช้าหรือตีกลับ</li>
-      <li>สอบถามเพิ่มเติม โทร 02-260-7061 ต่อ 101</li>
     </ol></div>
   </div>
 
