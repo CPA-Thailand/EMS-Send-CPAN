@@ -173,33 +173,21 @@ function showErr(box, list, fields){
 }
 function clearErr(box){ $(box).classList.remove('show'); document.querySelectorAll('.error').forEach(e=>e.classList.remove('error')); }
 
-const isThai = () => document.querySelector('input[name=idType]:checked').value === 'THAI';
-function applyType(){
-  const t=isThai(), el=$('idnum'); el.value='';
-  el.maxLength = t?13:9; el.inputMode = t?'numeric':'text';
-  $('idLabel').firstChild.textContent = t?'เลขบัตรประชาชน 13 หลัก ':'เลขหนังสือเดินทาง (Passport No.) ';
-  $('idHint').textContent = t?'ของผู้สอบเท่านั้น':'ตัวอักษรภาษาอังกฤษและตัวเลข 6–9 ตัว ไม่ต้องเว้นวรรค';
-}
-document.querySelectorAll('input[name=idType]').forEach(r=>r.addEventListener('change',applyType));
 $('fullname').addEventListener('input',e=>{ e.target.value=e.target.value.replace(/[^A-Za-z .'-]/g,'').toUpperCase(); });
-$('idnum').addEventListener('input',e=>{
-  e.target.value = isThai() ? e.target.value.replace(/\D/g,'') : e.target.value.replace(/[^A-Za-z0-9]/g,'').toUpperCase();
-});
+$('idnum').addEventListener('input',e=>{ e.target.value=e.target.value.replace(/\D/g,''); });
 ['zip','tel'].forEach(id=>$(id).addEventListener('input',e=>{ e.target.value=e.target.value.replace(/\D/g,''); }));
 
 $('next1').onclick = async () => {
   clearErr('ve1');
-  const name=$('fullname').value.trim().replace(/\s+/g,' '), idv=$('idnum').value, t=isThai();
+  const name=$('fullname').value.trim().replace(/\s+/g,' '), idv=$('idnum').value;
   const errs=[], bad=[];
   if(!/^[A-Za-z]+([ .'-][A-Za-z]+)+$/.test(name)){errs.push('กรุณากรอกชื่อและนามสกุลภาษาอังกฤษ (คั่นด้วยช่องว่าง)');bad.push('fullname');}
-  if(t && !validId(idv)){errs.push('เลขบัตรประชาชนไม่ถูกต้อง (ต้องมี 13 หลัก)');bad.push('idnum');}
-  if(!t && !/^[A-Z0-9]{6,9}$/.test(idv)){errs.push('เลขหนังสือเดินทางต้องเป็นตัวอักษร/ตัวเลข 6–9 ตัว');bad.push('idnum');}
+  if(!validId(idv)){errs.push('เลขบัตรประชาชนไม่ถูกต้อง (ต้องมี 13 หลัก)');bad.push('idnum');}
   if(errs.length) return showErr('ve1',errs,bad);
-  if(API.indexOf('PASTE_YOUR')!==-1) return showErr('ve1',['ยังไม่ได้ตั้งค่า API ในไฟล์ index.html'],[]);
   $('next1').disabled=true; $('next1').textContent='กำลังตรวจสอบ...';
   try{
     const r = await call({action:'check',idNumber:idv});
-    if(r.exists) return showErr('ve1',[(t?'เลขบัตรประชาชน':'เลขหนังสือเดินทาง')+'นี้ได้ส่งข้อมูลแล้ว ไม่สามารถส่งซ้ำได้'],['idnum']);
+    if(r.exists) return showErr('ve1',['เลขบัตรประชาชนนี้ได้ส่งข้อมูลแล้ว ไม่สามารถส่งซ้ำได้'],['idnum']);
     $('nm').value = name; go(2);
   }catch(e){ showErr('ve1',['เชื่อมต่อระบบไม่ได้ กรุณาลองใหม่'],[]); }
   finally{ $('next1').disabled=false; $('next1').textContent='ถัดไป'; }
@@ -216,14 +204,13 @@ $('send').onclick = async () => {
   if(errs.length) return showErr('ve2',errs,bad);
   $('send').disabled=true; $('send').textContent='กำลังบันทึก...';
   try{
-    const r = await call({action:'submit',idType:document.querySelector('input[name=idType]:checked').value,idNumber:$('idnum').value,fullName:$('nm').value,address:addr,zip,tel});
+    const r = await call({action:'submit',idType:'THAI',idNumber:$('idnum').value,fullName:$('nm').value,address:addr,zip,tel});
     if(r.ok){ $('sum').textContent=$('nm').value+'\n'+addr+' '+zip+'\nโทร '+tel; go(3); }
     else showErr('ve2',[r.msg||'บันทึกไม่สำเร็จ'],[]);
   }catch(e){ showErr('ve2',['เชื่อมต่อระบบไม่ได้ กรุณาลองใหม่'],[]); }
   finally{ $('send').disabled=false; $('send').textContent='ส่งข้อมูล'; }
 };
-$('back3').onclick = () => { ['fullname','addr','zip','tel'].forEach(i=>$(i).value=''); document.querySelector('input[name=idType][value=THAI]').checked=true; applyType(); go(1); };
-applyType();
+$('back3').onclick = () => { ['fullname','idnum','addr','zip','tel'].forEach(i=>$(i).value=''); go(1); };
 </script>
 </body>
 </html>
